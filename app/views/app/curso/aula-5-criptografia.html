@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!-- Estilo customizado -->
+    <link rel="stylesheet" href="css/style.css">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <title>Criptografia</title>
+
+    
+</head>
+<body>
+    
+    <header>
+        <nav class="navbar navbar-expand-md navbar-dark bg-danger">
+            <div class="container text-white">
+                <a href="aula-2-gereciamento-pacotes.html" class="h3 font-weight-normal">Linux Debian</a>
+            </div>
+        </nav>
+    </header>
+    
+    <section>
+        <div class="container">
+            <div class="row"><!-- row -->
+                <div class="col-12 py-4 border-bottom">
+                    <h2>Criptografia</h2>
+                    <h4>Objetivos da Aula:</h4>
+                    <ul>
+                        <li>O que é Secure Shell.</li>
+                        <li>Configurar a rede para modo bridge.</li>
+                        <li>---</li>
+                        <li>---</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12 py-4 border-bottom">
+                    
+                    <h3>Secure Shell (SSH)</h3>
+                    <p>É um protocolo de rede criptografado para operação de serviços de rede de forma segura sobre uma rede insegura. </p>
+
+                    <h5>Exemplo:</h5>
+                    <p>Login remoto.</p>
+
+                </div>
+                <div class="col-12 py-4 border-bottom">
+                    
+                    <h3>Configurar rede em modo bridge:</h3>
+                    <p>Existem formas de se configurar a rede, os principais modos de configuração de rede são o modo NAT (padrão, dhcp) e o modo bridge (static).
+                        <ul>
+                            <strong>NAT</strong>
+                            <li>auto lo</li>
+                            <li>iface lo inet loopback</li>
+                            <li>auto enp0s3</li>
+                            <li>iface enp0s3 inet dhcp</li>
+                        </ul>
+                        <ul>
+                            <strong>Bridge</strong>
+                            <li>auto lo</li>
+                            <li>iface lo inet loopback</li>
+                            <li>auto enp0s3</li>
+                            <li>iface enp0s3 inet static</li>
+                            <li>address 192.168.15.(numero-da-maquina)</li>
+                            <li>netmask 255.255.255.0</li>
+                            <li>gateway 192.168.15.254</li>
+                            <li>broadcast 192.168.15.255</li>
+                        </ul>
+                    </p>
+
+                    <h5>Subtítulo</h5>
+                    <p>Lorem ipsum dolor sit amet.</p>
+                    
+                </div>
+                <div class="col-12 py-4 border-bottom">
+                    
+                    <h3>Comando APT Search</h3>
+                    <p>A partir desse comando, poderá ser encontrado.</p>
+
+                    <ul>
+                        <li>Lista</li>
+                        <p>Lorem ipsum:</p>
+                        <p class="border rounded p-2 bg-light text-danger d-inline">&#36; sudo apt search &#60;nome-busca&#62;</p><br><br>
+                    </ul>
+                    
+                </div>
+                <div class="col-12 py-4 border-bottom">
+                    
+                    <h3>Serviço Ativo</h3>
+                    <p>Verificar o status do serviço.</p>
+
+                    <p class="border rounded p-2 bg-light text-danger d-inline">&#36; sudo apt search &#60;nome-busca&#62;</p><br><br>
+
+                </div>
+                
+            </div>
+        </div>
+    </section>
+    
+    <footer class="bg-dark stretch-bottom py-2 text-light">
+        <div class="container">
+            <p>Site desenvolvido por Henrique Bustillos</p>
+        </div>
+    </footer>
+
+    <!-- JavaScript Opcional -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+    
+</body>
+</html>

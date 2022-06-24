@@ -1,0 +1,148 @@
+<?php require_once "../app/views/navbar.phtml" ?>
+
+
+
+<?php if (isset($_GET['ida'])) { 
+    $infoAula = '';
+    foreach($this->aulas as $item => $aula){
+        if($aula['id'] == $_GET['ida']){
+            $ida = $aula['id'];
+            $idc = $_GET['id'];
+        }
+    }
+    ?>
+
+    <!-- HEADING -->
+        <div class="row bg-light shadow-sm">
+            <div class="container">
+                <div class="col">
+                    
+                    <a href="/curso?id=<?=$_GET['id']?>" class="nav-link text-muted">Voltar</a>
+
+                </div>
+            </div>
+        </div>
+
+    <!-- BODY -->
+            <div class="row">
+                <div class="col">
+                    
+                    <?php
+                    if( isset($idc) && isset($ida) && file_exists("../app/views/app/curso/".$idc."-".$ida.".html")) {
+                        require_once "../app/views/app/curso/".$idc."-".$ida.".html";
+                    } else { ?>
+                        <div class="container py-5">
+                            <div class="alert alert-danger" role="alert">
+                                <h4 class="alert-heading pt-2">O arquivo da aula não foi encontrado.</h4>
+                                <p>Todo conteúdo existente em um curso tem como responsável o próprio criador. Sendo assim, problemas como esse não devem ocorrer, se possível entrar em contato com o criador do curso.</p>
+                                <hr>
+                                <p>Informações técnicas:</p>
+                                <ul>
+                                    <li>ID do Curso: <?=$_GET['id']?></li>
+                                    <li>ID do criador do curso: <?=$this->curso['id_professor']?></li>
+                                    <li>ID da Aula: <?=$_GET['ida']?></li>
+                                    <li>ID do Usuário: <?=$_SESSION['id']?></li>
+                                    <li>Nome do Curso: <?=$this->curso['curso']?></li>
+                                    <li>Nome do criador do curso: <?=$this->curso['nome']?> <?=$this->curso['sobrenome']?></li>
+                                    <li>Nome do usuário: <?=$_SESSION['nome']?> <?=$_SESSION['sobrenome']?></li>
+                                    <li>Data: <?=date('d-m-Y H:i')?></li>
+                                </ul>
+                                
+                            </div>
+                        </div>
+                    <?php
+                    }
+                    ?>
+
+                </div>
+            </div>
+
+<?php } else { ?>
+
+<!-- BODY -->
+<div class="container">
+    <!-- HEADING -->
+        <div class="row my-5">
+
+            <?php if(file_exists('img/'.$this->curso['img'].'.jpg')){?>
+                                
+                <div class="col-sm-12 col-md-4 col-lg-3 mb-4">
+                    
+                    <img class="img-fluid border rounded" src="img/<?=$this->curso['id']?>.jpg" alt="<?=$this->curso['curso']?>">
+                
+                </div>
+
+            <?php } ?>
+        
+            <div class="col-sm-12 col-md-8 col-lg-9 mt-0 pt-0">
+            
+                <h3 class="display-4 mt-0 pt-0"><?= $this->curso['curso'] ?> <?php if($_SESSION['tipo']>=2){echo '<span class="text-muted h5 font-italic">(ID: '.$this->curso['id'].')</span>';} ?></h3>
+                <p class="subtitle"><?= $this->curso['descricao'] ?></p>
+
+            </div>
+
+        </div>
+
+    <!-- SEÇÕES DO CURSO -->
+        <?php
+            $i = 1;
+            foreach($this->secoes as $itemSecao => $secao){
+            $var = true;
+        ?>
+            <div class="accordion my-4" id="collapse">
+                <div class="card rounded">
+                    <div class="card-header btn btn-danger btn-light text-left" data-toggle="collapse" data-target="#collapse<?=$i?>" aria-expanded="false" aria-controls="collapseOne" id="header">
+                        <span class="text-muted font-weight-light">Seção <?= $i ?></span>
+                        <hr class="mb-3 mt-2">
+                        <span class="blockquote text-secondary "><?=$secao['secao']?></span>
+                    </div>
+                    <!-- AULAS DA SEÇÃO -->
+                    <?php 
+                        $i2 = 1;
+                        
+                        $entrou = 0;
+                        $existe = 0;
+                        foreach($this->aulas as $itemAula => $aula){
+
+                            $var = true;
+
+                            if ($aula['id_secao'] == $secao['id']) {
+
+                                $existe = 1;
+
+                                if ($aula['status']) { 
+                                    $entrou = 1; ?>
+                                    <div id="collapse<?=$i?>" class="collapse border-bottom rounded" aria-labelledby="headingOne" data-parent="#collapse">
+                                        <div class="card-body">
+                                            <h5 class="card-title">Aula <?=$i2?>. - <?=$aula['titulo']?> <?php if($_SESSION['tipo']>=2){echo '<span class="text-muted font-italic">(ID: '.$aula['id'].')</span>';} ?></h5>
+                                            <p class="card-text"><?=$aula['descricao']?></p>
+                                            <a href="/curso?id=<?=$_GET['id']?>&ida=<?=$aula['id']?>" class="btn btn-danger btn-debian">Ver conteúdo</a>
+                                        </div>
+                                    </div>
+                    <?php       }
+                            }
+                            
+                            $i2++;
+
+                        }
+
+
+                    if($existe == 0 || $entrou == 0) { ?>
+
+                        <div id="collapse<?=$i?>" class="collapse border-bottom rounded" aria-labelledby="headingOne" data-parent="#collapse">
+                            <div class="card-body text-center text-muted">
+                                <p class="card-text">Esta seção ainda não possui aulas publicadas.</p>
+                            </div>
+                        </div>
+
+                    <?php
+
+                    }
+                    ?> 
+                </div> 
+            </div> 
+            <?php
+                    $i++;
+
+                } 
+            } ?>

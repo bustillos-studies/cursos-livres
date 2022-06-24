@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!-- Estilo customizado -->
+    <link rel="stylesheet" href="css/style.css">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <title>Gerenciamento de Pacotes</title>
+
+    
+</head>
+<body>
+    
+    <header>
+        <nav class="navbar navbar-expand-md navbar-dark bg-danger">
+            <div class="container text-white">
+                <a href="aula-2-gereciamento-pacotes.html" class="h3 font-weight-normal">Linux Debian</a>
+            </div>
+        </nav>
+    </header>
+    
+    <section>
+        <div class="container">
+            <div class="row"><!-- row -->
+                <div class="col-12 py-4 border-bottom">
+                    <h2>Gerenciamento de Pacotes</h2>
+                    <h4>O que é?</h4>
+                    <p>Um gerenciador de pacotes é uma ferramenta utilizada para instalação, remoção e atualização de programas. Normalmente são encontrados em sistemas GNU/Linux, tendo em vista que tais sistemas consistem de milhares de pacotes distintos.</p>
+                    <ul>
+                        <h5>Debian Source</h5>
+                        <li>.deb-src</li>
+                        <h5>Debian</h5>
+                        <li>.deb</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12 py-4 border-bottom">
+                    <h3>Distribuições Linux Debian</h3>
+                    <p>O Debian possui diversas distribuições de pacotes, cada uma delas possui três principais componentes:</p>
+                    <ul>
+                        <h5>Componente I</h5>
+                        <li>contrib</li>
+                        <p>Onde possui todas as contribuições do pacote.</p>
+                        <h5>Componente II</h5>
+                        <li>main</li>
+                        <p>Onde possui os principais arquivos da distribuição.</p>
+                        <h5>Componente III</h5>
+                        <li>non-free</li>
+                        <p>Pacotes e softwares não-livres.</p>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-12 py-4 border-bottom">
+                    <h3>Como configurar o Linux para Instalações APT</h3>
+                    <p>É necessário instalar e configurar alguns pacotes no sistema do Linux.</p>
+                    <br>
+                    <ol type="1">
+                        <h4>Habilitando e adicionando diretórios de recursos</h4>
+                        <li>
+                            <p class="border rounded p-2 bg-light text-danger d-inline">&#36; cd /etc/apt</p><br><br>
+                        </li>
+                        <li>
+                            <p class="border rounded p-2 bg-light text-danger d-inline">&#36; sudo nano sources.list</p><br><br>
+                        </li>
+                        <li>
+                            Comentar tudo o que houver neste arquivo utilizando o caracter <strong>#</strong>
+                        </li>
+                        <li>
+                            Digitar os seguintes diretórios abaixo dos textos comentados do arquivo:
+                            <ul>
+                                <li>
+                                    deb http://ftp.br.debian.org/debian/ stable main contrib non-free
+                                </li>
+                                <li>
+                                    deb-src http://ftp.br.debian.org/debian/ stable main contrib non-free
+                                </li>
+                                <li>
+                                    deb http://ftp.br.debian.org/debian/ stable-updates main contrib non-free
+                                </li>
+                                <li>
+                                    deb-src http://ftp.br.debian.org/debian/ stable-updates main contrib non-free
+                                </li>
+                                <li>
+                                    deb http://security.debian.org/ stable/updates main
+                                </li>
+                                <li>
+                                    deb-src http://security.debian.org/ stable/updates main
+                                </li>
+                                <li>
+                                    deb http://ftp.debian.org/debian stretch-backports main
+                                </li>
+                                <li>
+                                    deb-src http://ftp.debian.org/debian stretch-backports main
+                                </li>
+                            </ul>
+                            Pressionar <strong>Ctrl</strong> + <strong>X</strong> para sair do arquivo. Logo então ele pedirá para salvar o arquivo, então pressione <strong>S</strong> e em seguida pressione <strong>Enter</strong> duas vezes.
+                            <br><br>
+                        </li>
+                        <h4>Configurando a placa de rede</h4>
+                        <br>
+                        <li>
+                            <p class="border rounded p-2 bg-light text-danger d-inline">&#36; cd /etc/network</p><br><br>
+                        </li>
+                        <li>
+                            <p class="border rounded p-2 bg-light text-danger d-inline">&#36; sudo nano interfaces</p><br><br>
+                        </li>
+                        <li>
+                            Apagar tudo.
+                        </li>
+                        <li>
+                            Digitar a configuração(interfaces) de rede em modo bridge.
+                            <ul>
+                                <strong>NAT</strong>
+                                <li>auto lo</li>
+                                <li>iface lo inet loopback</li>
+                                <li>auto enp0s3</li>
+                                <li>iface enp0s3 inet dhcp</li>
+                            </ul>
+                            <br>
+                            <ul>
+                                <strong>Bridge</strong>
+                                <li>auto lo</li>
+                                <li>iface lo inet loopback</li>
+                                <li>auto enp0s3</li>
+                                <li>iface enp0s3 inet static</li>
+                                <li>address 192.168.15.(numero-da-maquina)</li>
+                                <li>netmask 255.255.255.0</li>
+                                <li>gateway 192.168.15.254</li>
+                                <li>broadcast 192.168.15.255</li>
+                            </ul>
+                            <br>
+                        </li>
+                        <h4>Configurando DNS</h4>
+                        <br>
+                        <li>
+                            <p class="border rounded p-2 bg-light text-danger d-inline">&#36; cd /etc</p><br><br>
+                        </li>
+                        <li>
+                            <p class="border rounded p-2 bg-light text-danger d-inline">&#36; sudo nano resolv.conf</p><br><br>
+                        </li>
+                        <li>
+                            Apagar tudo o que há inserido neste arquivo e incluir:
+                            <ul>
+                                <li>nameserver 8.8.8.8</li>
+                                <li>nameserver 8.8.4.4</li>
+                            </ul>
+                            <br>
+                        </li>
+                        <h4>Reiniciar o serviço de rede</h4>
+                        <br>
+                        <li>
+                            <p class="border rounded p-2 bg-light text-danger d-inline">&#36; sudo etc/init.d/networking restart</p><br><br>
+                        </li>
+                        <h4>Atualizando o APT</h4>
+                        <br>
+                        <li>
+                            <p class="border rounded p-2 bg-light text-danger d-inline">&#36; sudo apt update</p><br><br>
+                        </li>
+                    </ol>
+                </div>
+            </div>
+
+
+
+            <div class="row">
+                <div class="col-12 py-4 border-bottom">
+                    <h3>Comando APT e APT-GET</h3>
+                    <p>O comando <strong>apt</strong> é uma melhoria do comando <strong>apt-get</strong>, possuindo as mesmas funções e algumas possibilidades a mais.</p>
+                    <p>O <strong>apt</strong> é uma ferramenta para manipulação de pacotes no Linux, sendo controlada apenas pelo usuário root.</p>
+                    <p class="border rounded p-2 bg-light text-danger d-inline">&#36; sudo apt &#60;instrução&#62;</p><br><br>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12 py-4 border-bottom">
+                    <h3>Instalar pacotes</h3>
+                    <p><strong>Instalar</strong> um pacote ao sistema operacional é dado pelo comando:</p>
+                    <p class="border rounded p-2 bg-light text-danger d-inline">&#36; sudo apt install &#60;nome-do-pacote&#62;</p><br><br>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12 py-4 border-bottom">
+                    <h3>Purgar e Remover pacotes</h3>
+                    <p><strong>Remover</strong> um pacote ou desinstalar todos os arquivos relacionados com o pacote pode ser dado pelo comando (não apaga as configurações):</p>
+                    <p class="border rounded p-2 bg-light text-danger d-inline">&#36; sudo apt remove &#60;nome-do-pacote&#62;</p><br><br>
+                    <p><strong>Purgar</strong> um pacote significa desinstalar todos os arquivos bináros relacionados co o pacote e todos os arquivos de configuração, é dado pelo comando:</p>
+                    <p class="border rounded p-2 bg-light text-danger d-inline">&#36; sudo apt purge &#60;nome-do-pacote&#62;</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12 py-4 border-bottom">
+                    <h3>Atualizar e Melhorar pacotes</h3>
+                    <p>A atualização é dada pela instrução <strong>update</strong> do comando apt, logo é dado:</p>
+                    <p class="border rounded p-2 bg-light text-danger d-inline">&#36; sudo apt update</p><br><br>
+                    <p>A melhora é dada pela instrução <strong>upgrade</strong> do comando apt, logo é dado:</p>
+                    <p class="border rounded p-2 bg-light text-danger d-inline">&#36; sudo apt upgrade;</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12 py-4 border-bottom">
+                    <h3>Cron</h3>
+                    <p>O cron é um agendador de tarefas. Possui alguns atributos:</p>
+                    <ul>
+                        <li>
+                            <p class="border rounded p-2 bg-light text-danger d-inline">&#36; sudo crontab -l</p><br><br>
+                            <ul>
+                                <li>
+                                    Ele lista o conjunto de argumentos que está presente no sistema.
+                                </li>
+                            </ul>
+                        </li>
+                        <br>
+                        <li>
+                            <p class="border rounded p-2 bg-light text-danger d-inline">&#36; sudo crontab -e</p><br><br>
+                            <ul>
+                                <li>
+                                    Ele edita a lista de argumentos do cron.
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <h4>Como utilizar?</h4>
+                    <img src="crontab.jpg" alt="Crontab" class="img-fluid">
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <footer class="bg-dark stretch-bottom py-2 text-light">
+        <div class="container">
+            <p>Site desenvolvido por Henrique Bustillos</p>
+        </div>
+    </footer>
+
+    <!-- JavaScript Opcional -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+    
+</body>
+</html>

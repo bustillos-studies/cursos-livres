@@ -1,0 +1,211 @@
+<?php require_once "../app/views/navbar.phtml"; ?>
+
+<div class="container">
+
+    <div class="row my-5">
+
+        <div class="col-md-12 mx-auto text-center">
+
+            <span class="display-4"">Estudante</span>
+            <blockquote class="blockquote text-muted">Informações completas do estudante</blockquote>
+
+        </div>
+
+    </div>
+            
+		<?php if(isset($_GET['status']) && $_GET['status'] == 1) { ?>
+
+            <div class="alert alert-success alert-dismissible fade show text-center mt-5" role="alert">
+                <h4>As alterações foram realizadas com sucesso.</h4> 
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+        <?php } else if(isset($_GET['status']) && $_GET['status'] == 2) { ?>
+
+            <div class="alert alert-danger alert-dismissible fade show text-center mt-5" role="alert">
+                <h4>Já existe um usuário com o e-mail solicitado.</h4> 
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+        <?php } ?>
+
+    <div class="row mb-5">
+
+        <div class="col-md-8 mx-auto px-auto border shadow bg-white rounded text-center">
+            
+            
+            <div class="row mt-4">
+
+                <div class="col text-center">
+
+                    <p class="title"><?php echo $this->estudante['nome'] . ' '; echo $this->estudante['sobrenome'] ?></p>
+                    <p class="subtitle text-muted font-italic">Estudante</p>
+
+                </div>
+
+            </div>   
+                
+            <div class="row mt-4">
+
+                <div class="col">
+
+                    <form action="/estudante/alterar" method="post" >
+
+                        <input id="id" name="id" type="text" value="<?=$this->estudante['id']?>" hidden>
+
+                        <div class="form-row">
+
+                            <div class="form-group col-md-6">
+                                <label for="nome">Nome</label>
+                                <input type="text" class="form-control" id="nome" name="nome" maxlength="40" value="<?= $this->estudante['nome'] ?>">
+                            </div>
+
+                            <div class="form-group col-md-6">
+                                <label for="sobrenome">Sobrenome</label>
+                                <input type="text" class="form-control" id="sobrenome" name="sobrenome" maxlength="40" value="<?= $this->estudante['sobrenome'] ?>">
+                            </div>
+
+                        </div>
+
+                        <div class="form-row">
+
+                            <div class="form-group col-md-12">
+                                <label for="email">Email</label>
+                                <input type="email" class="form-control" name="email" id="email" maxlength="60" value="<?= $this->estudante['email'] ?>" >
+                            </div>
+
+                        </div>
+
+                        <div class="form-row">
+
+                            <div class="form-group col-md-6">
+                                <label for="cel">Celular</label>
+                                <input type="text" class="form-control" id="cel" name="cel" maxlength="15" value="<?= $this->estudante['cel'] ?>" placeholder="(00) 00000-0000">
+                            </div>
+
+                            <div class="form-group col-md-6">
+                                <label for="cel">Telefone</label>
+                                <input type="text" class="form-control" id="tel" name="tel" maxlength="14" value="<?= $this->estudante['tel'] ?>" placeholder="(00) 0000-0000">
+
+                            </div>
+
+                        </div>
+
+                        
+                        <?php 
+                        
+                        $this->estudante['tipo'];
+
+                        ?>
+                        <div class="form-row">
+
+                            <div class="form-group col-md-6 mx-auto">
+                                <label for="tipo">Tipo de conta</label>
+                                <select name="tipo" id="tipo" class="form-control">
+                                    <option value="" selected>Selecione o tipo de conta</option>
+                                    <option value="1">Estudante</option>
+                                    <option value="2">Professor</option>
+                                    <option value="3">Desenvolvedor</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="row my-3">
+
+                            <div class="col-sm-4 col-md-4">
+                                <hr>
+                            </div>
+
+                            <div class="col-sm-4 col-md-4 text-center">
+                                <span class="subtitle text-muted">Alterar senha</span>
+                            </div>
+
+                            <div class="col-sm-4 col-md-4">
+                                <hr>
+                            </div>
+
+                        </div>
+
+
+                        <div class="form-row">
+
+
+                            <div class="form-group col-md-6 mx-auto">
+                                <div class="input-group">
+                                    <input type="password" class="form-control" name="senhanova" id="senhanova" maxlength="100" placeholder="Nova senha">
+                                    <div class="input-group-append">
+                                        <button type="button" class="btn btn-light btn-sm border" data-toggle="button" aria-pressed="false" onclick="mostrarSenha('senhanova')">Mostrar</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <script>
+                            
+                                function mostrarSenha(id) {
+                                    var tipo = document.getElementById(id)
+                                    if(tipo.type == "password"){
+                                        tipo.type = "text"
+                                    } else {
+                                        tipo.type = "password"
+                                    }
+                                }
+
+                            </script>
+
+                        </div>
+
+                        <?php if($this->view->erroAlterar) { ?>
+
+                            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            <strong>Erro na validação dos dados!</strong> 
+                            <br>
+                            Verifique se os campos foram preenchidos corretamente.
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                            </div>
+
+                        <?php } ?>
+
+
+                        <div class="form-row mt-3">
+
+                            <div class="form-group col-md-12 text-center">
+                                <button type="submit" class="btn w-25 btn-dark">Salvar</button>
+                            </div>
+
+                        </div>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+
+    $('#cel').maskbrphone({  
+        useDdd           : true,
+        useDddParenthesis: true,
+        dddSeparator     : ' ',
+        numberSeparator  : '-'
+    });
+
+    $('#tel').maskbrphone({  
+        useDdd           : true,
+        useDddParenthesis: true,
+        dddSeparator     : ' ',
+        numberSeparator  : '-'
+    });
+
+</script>

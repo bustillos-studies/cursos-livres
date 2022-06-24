@@ -1,0 +1,66 @@
+<style>
+#logo {
+	filter: brightness(100);
+}
+</style>
+<nav class="navbar navbar-expand-lg navbar-light bg-danger border-bottom shadow-md" id="nav">
+
+	<div class="container">
+
+		<a class="navbar-brand" href="/inicio">
+
+			<img id="logo" src="img/logo-cl.png" height="30" class="d-inline-block align-top" alt="">
+			<!-- CursosLivres -->
+
+		</a>
+
+		<button class="navbar-toggler" data-toggle="collapse" data-target="#menu">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+
+		<div class="collapse navbar-collapse" id="menu">
+			<ul class="navbar-nav ml-auto">
+
+				<?php 
+					$pagina = $this->view->page;
+					$pagina = str_replace('estudantes/', '', $pagina);
+					$pagina = str_replace('usuario/', '', $pagina);
+					if($this->tipo['numero'] > 1 && $pagina != 'estudantes') {
+				?>
+					<li class="nav-item">
+						<a class="nav-link btn btn-danger text-white px-3 mx-1 my-auto" href="/estudantes">
+							Estudantes
+						</a>
+					</li>
+				<?php } 
+					if($this->tipo['numero'] > 1 && $pagina != 'cursos') { ?>
+					<li class="nav-item">
+						<a class="nav-link btn btn-danger text-white my-auto px-3 mx-1" href="/cursos">
+							Cursos
+						</a>
+					</li>
+				<?php } 
+					if ($pagina == 'perfil') {
+				?>
+					<li class="nav-item">
+						<a class="nav-link btn btn-danger text-white my-auto px-3 mx-1" href="/sair">
+							Sair
+						</a>
+					</li>
+				<?php } else { ?>
+					<li class="nav-item">
+						<a class="nav-link btn btn-danger text-white my-auto px-3 mx-1" href="/perfil">
+							<?= $_SESSION['nome']?> <?= $_SESSION['sobrenome']?>
+						</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link btn btn-danger text-white my-auto px-3 mx-1" href="/sair">
+							Sair
+						</a>
+					</li>
+
+				<?php } ?>
+
+			</ul>
+	</div>
+</nav>

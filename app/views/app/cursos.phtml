@@ -1,0 +1,1471 @@
+<?php require_once "../app/views/navbar.phtml" ?>
+
+<!-- Barra Cursos, Seções, Aulas -->
+<div class="row bg-light shadow-sm">
+
+	<div class="col-md-12 text-center">
+
+		<ul class="nav nav-pills justify-content-center">
+			<li class="nav-item dropdown">
+				<a class="btn-transparent nav-link dropdown-toggle text-secondary" data-toggle="dropdown" href="#" aria-haspopup="true" aria-expanded="false">Cursos</a>
+				<div class="dropdown-menu" id="">
+					<a class="dropdown-item" href="#cursos">Cursos</a>
+					<div class="dropdown-divider"></div>
+					<a class="dropdown-item" href="#cursoc">Criar</a>
+					<a class="dropdown-item" href="#cursoe">Editar</a>
+					<a class="dropdown-item" href="#cursoa">Apagar</a>
+				</div>
+			</li>
+			<li class="nav-item dropdown">
+				<a class="btn-transparent nav-link dropdown-toggle text-secondary" data-toggle="dropdown" href="#" aria-haspopup="true" aria-expanded="false">Seções</a>
+				<div class="dropdown-menu" id="">
+					<a class="dropdown-item" href="#secoes">Seções</a>
+					<div class="dropdown-divider"></div>
+					<a class="dropdown-item" href="#secaoc">Criar</a>
+					<a class="dropdown-item" href="#secaoe">Editar</a>
+					<a class="dropdown-item" href="#secaoa">Apagar</a>
+				</div>
+			</li>
+			<li class="nav-item dropdown">
+				<a class="btn-transparent nav-link dropdown-toggle text-secondary" data-toggle="dropdown" href="#" aria-haspopup="true" aria-expanded="false">Aulas</a>
+				<div class="dropdown-menu" id="">
+					<a class="dropdown-item" href="#aulas">Aulas</a>
+					<div class="dropdown-divider"></div>
+					<a class="dropdown-item" href="#aulac">Criar</a>
+					<a class="dropdown-item" href="#aulae">Editar</a>
+					<a class="dropdown-item" href="#aulaa">Apagar</a>
+				</div>
+			</li>
+		</ul>
+
+	</div>
+
+</div>
+
+<script>
+	function verificaCurso() {
+		var id = document.getElementById('editarCursoId').value;
+		if (id != ''){
+			window.location.href = "/cursos?idc="+id+"#cursoe";
+		}
+	}
+
+	function verificaSecoesEditar() {
+		var id_curso = document.getElementById('editarSecaoIdCurso').value;
+		if (id_curso != ''){
+			window.location.href = "/cursos?idc="+id_curso+"#secaoe";
+		}
+	}
+
+	function verificaSecoesApagar() {
+		var id_curso = document.getElementById('apagarSecaoIdCurso').value;
+		if (id_curso != ''){
+			window.location.href = "/cursos?idc="+id_curso+"#secaoa";
+		}
+	}
+
+	function verificaAulasEditar() {
+		var id_secao = document.getElementById('editarAulaIdSecao').value;
+		if (id_secao != ''){
+			window.location.href = "/cursos?idse="+id_secao+"#aulae";
+		}
+	}
+
+	function verificaAulasEditarDados() {
+		var id_secao = document.getElementById('editarAulaIdSecao').value;
+		if (id_secao != ''){
+			var id_aula = document.getElementById('editarAulaId').value;
+			window.location.href = "/cursos?idse="+id_secao+"&ida="+id_aula+"#aulae";
+		}
+	}
+
+	function verificaAulasApagar() {
+		var id_secao = document.getElementById('apagarAulaIdSecao').value;
+		if (id_secao != ''){
+			window.location.href = "/cursos?idse="+id_secao+"#aulaa";
+		}
+	}
+
+</script>
+
+<!-- jQuery/Ajax da descrição -->
+<script>
+
+	// CRIAR CURSO - Descrição
+	$(document).on("keyup", "#criarCursoDescrição", function () {
+		var caracteresRestantes = 500;
+		var caracteresDigitados = parseInt($(this).val().length);
+		var caracteresRestantes = caracteresRestantes - caracteresDigitados;
+
+		$(".criarCursoDescrição").text('('+caracteresRestantes+')');
+		});
+
+	// EDITAR CURSO - Descrição
+	$(document).on("keyup", "#editarCursoDescricao", function () {
+		var caracteresRestantes = 500;
+		var caracteresDigitados = parseInt($(this).val().length);
+		var caracteresRestantes = caracteresRestantes - caracteresDigitados;
+
+		$(".editarCursoDescricao").text('('+caracteresRestantes+')');
+		});
+
+	// CRIAR AULA - Descrição
+	$(document).on("keyup", "#criarAulaDescricao", function () {
+		var caracteresRestantes = 200;
+		var caracteresDigitados = parseInt($(this).val().length);
+		var caracteresRestantes = caracteresRestantes - caracteresDigitados;
+
+		$(".criarAulaDescricao").text('('+caracteresRestantes+')');
+		});
+
+	// EDITAR AULA - Descrição
+	$(document).on("keyup", "#editarAulaDescricao", function () {
+		var caracteresRestantes = 200;
+		var caracteresDigitados = parseInt($(this).val().length);
+		var caracteresRestantes = caracteresRestantes - caracteresDigitados;
+
+		$(".editarAulaDescricao").text('('+caracteresRestantes+')');
+		});
+
+</script>
+<style type="text/css">
+	#seta{
+		z-index: 0;
+	}
+</style>
+<!-- Seta para subir -->
+	<div id="seta" class="fixed-bottom m-5 px-5 hidden-lg-down transparent">
+		<div class="row">
+			<div class="col-12 text-right">
+				<a href="#nav" class="btn btn-light border text-muted px-5 py-3 font-weight-bold shadow">
+					^
+				</a>
+			</div>
+		</div>
+	</div>
+
+<!-- CURSOS -->
+	<div class="container">
+
+	<div class="row py-5" id="cursos">
+
+		<div class="col-md-12 text-center">
+
+			<span class="display-4">Cursos</span>
+			<blockquote class="blockquote text-muted">Crie ou edite cursos</blockquote>
+
+		</div>
+
+	</div>
+
+	<!-- CRIAR CURSO -->
+		<div id="cursoc"></div>
+
+		<?php if(isset($_GET['status']) && $_GET['status'] == 1) { ?>
+
+			<div class="alert alert-success alert-dismissible fade show text-center" role="alert">
+				<h4>O curso foi criado com sucesso!</h4> 
+				<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+
+		<?php } else if(isset($_GET['erro']) && $_GET['erro'] == "existe") { ?>
+
+			<div class="alert alert-danger alert-dismissible fade show text-center" role="alert">
+				<h4>Já existe um curso com esse nome!</h4> 
+				<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			
+		<?php } ?>
+
+		<div class="row">
+
+			<div class="col-md-8 mx-auto border shadow bg-white rounded">
+
+
+				<div class="row mt-4">
+
+					<div class="col text-center">
+
+						<p class="title">Criar curso</p>
+						<p class="subtitle text-muted font-italic">Crie um novo curso para seus alunos</p>
+
+					</div>
+
+				</div>
+
+				<div class="row my-3">
+				
+					<div class="col">
+
+						<form action="/cursos/criar" method="post" enctype="multipart/form-data">
+						
+							<div class="form-row">
+								<div class="form-group col-lg-6 col-md-8 mx-auto text-center">
+									<label for="criarCursoNome">Nome do Curso</label>
+									<input class="form-control" type="text" name="nome" maxlength="50" placeholder="Digite um nome para o curso" id="criarCursoNome" required>
+								</div>
+							</div>
+
+							<div class="form-row">
+								<div class="form-group col-lg-6 col-md-8 mx-auto text-center">
+									<label for="criarCursoDescrição">Descrição <span class="criarCursoDescrição text-muted">(500)</span></label>
+									<textarea class="form-control" type="textarea" name="descricao" rows="4" maxlength="500" placeholder="Digite uma breve descrição do curso" id="criarCursoDescrição" required></textarea>
+								</div>
+							</div>
+							
+							<div class="form-row">
+								<div class="form-group col-lg-6 col-md-8 mx-auto">
+									<label for="img">Selecione a imagem</label><br>
+									<span class="text-muted">Recomenda-se o tamanho "800x500"</span>
+									<input type="file" name="img" id="img">
+								</div>
+							</div>
+
+							<div class="form-row mt-4">
+
+								<div class="form-group col-lg-2 col-md-4 mx-auto">
+									<button class="btn btn-dark w-100" type="submit">Criar</button>
+								</div>
+
+							</div>
+						
+						</form>
+					
+					</div>
+				
+				</div>
+
+			</div>
+			
+		</div>
+
+
+	<!-- EDITAR CURSO -->
+		<div id="cursoe"></div>
+		
+		<?php if(isset($_GET['status']) && $_GET['status'] == 2) { ?>
+
+			<div class="alert alert-success alert-dismissible fade show text-center mt-5" role="alert">
+				<h4>O curso foi editado com sucesso!</h4> 
+				<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+
+		<?php } ?> 
+
+		<div class="row my-5" id="editarc">
+
+			<div class="col-md-8 mx-auto border shadow bg-white rounded" >
+
+				<div class="row mt-4">
+
+					<div class="col text-center">
+
+						<p class="title">Editar curso</p>
+						<p class="subtitle text-muted font-italic">Edite um curso já existente</p>
+
+					</div>
+
+				</div>
+
+				<div class="row my-3">
+		
+					<div class="col">
+
+							<?php if(isset($_GET['idc'])) { 
+								$i2 = 0;
+								$idc = $_GET['idc'];
+								while ($this->cursos[$i2]['id'] != $idc) {
+									$i2++;
+								} 
+							?>
+							<form action="/cursos/editar" method="post">
+								<div class="form-row">
+									<div class="form-group col-lg-6 col-md-8 mx-auto text-center">
+										<label for="editarCursoId">Curso</label>
+										<select id="editarCursoId" name="id" class="form-control" required>
+											<option value="" >Selecione o curso</option>
+
+											<?php foreach($this->cursos as $key => $curso) { 
+												if($curso['id'] == $idc){ ?>
+												<option value="<?= $curso['id'] ?>" selected><?= $curso['curso']?></option>
+											<?php } else { ?>
+												<option value="<?= $curso['id'] ?>"><?= $curso['curso']?></option>
+											<?php }} ?>
+										</select>
+										
+										<button type="button" class="btn btn-light text-muted" onclick="verificaCurso()">Recuperar informações do curso</button>
+									</div>
+								</div>
+								<div class="form-row">
+									<div class="form-group col-lg-6 col-md-8 mx-auto text-center">
+										<label for="editarCursoNome">Editar nome</label>
+											<input class="form-control" type="text" name="nome" maxlength="50" value="<?= $this->cursos[$i2]['curso'] ?>" id="editarCursoNome">
+									</div>
+								</div>
+								<div class="form-row">
+									<div class="form-group col-lg-6 col-md-8 mx-auto text-center">
+										<label for="editarCursoDescricao">Editar descrição <span class="editarCursoDescricao text-muted">(500)</span></label>
+										<textarea class="form-control" type="textarea" name="descricao" rows="4" maxlength="500"  id="editarCursoDescricao"><?= $this->cursos[$i2]['descricao'] ?></textarea>
+									</div>
+								</div>
+
+								<div class="form-row">
+									<div class="form-group col-lg-6 col-md-8 mx-auto text-center">
+										<label for="editarCursoStatus">Editar status</label>
+										<select id="editarCursoStatus" name="status" class="form-control">
+											<?php if($this->cursos[$i2]['status']) { ?>
+												<option value="">Selecione o status</option>
+												<option value="1" selected>Publicado</option>
+												<option value="0">Não publicado</option>
+											<?php } else { ?>
+												<option value="">Selecione o status</option>
+												<option value="1">Publicado</option>
+												<option value="0" selected>Não publicado</option>
+											<?php } ?>
+										</select>
+									</div>
+								</div>
+
+								<div class="form-row mt-4">
+
+								<div class="form-group col-lg-2 col-md-4 mx-auto">
+									<button class="btn btn-dark w-100" type="submit">Editar</button>
+								</div>
+
+							</div>
+
+						</form>
+
+
+							<?php } else { ?>
+
+							<form action="/cursos/editar" method="post">
+								<div class="form-row">
+									<div class="form-group col-lg-6 col-md-8 mx-auto text-center">
+										<label for="editarCursoId">Curso</label>
+										<select id="editarCursoId" name="id" class="form-control" required>
+											<option value="" selected>Selecione o curso</option>
+											<?php foreach($this->cursos as $key => $curso) { ?> 
+												<option value="<?= $curso['id'] ?>"><?= $curso['curso']?></option>
+											<?php } ?>
+										</select>
+										
+										<button type="button"class="btn btn-light text-muted mt-2" onclick="verificaCurso()">Recuperar informações do curso</button>
+									</div>
+								</div>
+								<div class="form-row">
+									<div class="form-group col-lg-6 col-md-8 mx-auto text-center">
+										<label for="editarCursoNome">Editar nome</label>
+										<input class="form-control" type="text" name="nome" maxlength="50" placeholder="Editar o nome do curso" id="editarCursoNome">
+									</div>
+								</div>
+								<div class="form-row">
+									<div class="form-group col-lg-6 col-md-8 mx-auto text-center">
+										<label for="editarCursoDescricao">Editar descrição <span class="editarCursoDescricao text-muted">(500)</span></label>
+										<textarea class="form-control" type="textarea" name="descricao" rows="4" maxlength="500"  placeholder="Digite uma breve descrição do curso" id="editarCursoDescricao"></textarea>
+									</div>
+								</div>
+
+								<div class="form-row">
+									<div class="form-group col-lg-6 col-md-8 mx-auto text-center">
+										<label for="editarCursoStatus">Editar status</label>
+										<select id="editarCursoStatus" name="status" class="form-control">
+											<option value="">Selecione o status</option>
+											<option value="1">Publicado</option>
+											<option value="0">Não publicado</option>
+										</select>
+									</div>
+								</div>
+							<div class="form-row mt-4">
+
+								<div class="form-group col-lg-2 col-md-4 mx-auto">
+									<button class="btn btn-dark w-100" type="submit">Editar</button>
+								</div>
+
+							</div>
+
+						</form>
+
+							<?php } ?>
+
+					</div>
+				
+				</div>
+
+			</div>
+
+		</div>
+
+
+	<!-- APAGAR CURSO -->
+
+		<div id="cursoa"></div>
+			
+		<?php if(isset($_GET['status']) && $_GET['status'] == 3) { ?>
+
+			<div class="alert alert-warning alert-dismissible fade show text-center mt-5" role="alert">
+				<h4>O curso foi apagado com sucesso.</h4> 
+				<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+
+		<?php } ?>
+
+		<div class="row my-5">
+
+			<div class="col-md-8 mx-auto border shadow bg-white rounded">
+
+				<div class="row mt-4">
+
+					<div class="col text-center">
+
+						<p class="title">Apagar curso</p>
+						<p class="subtitle text-muted font-italic">Apague um curso com falhas ou criado por engano</p>
+
+					</div>
+
+				</div>
+
+				<div class="row my-3">
+		
+					<div class="col">
+
+						<form action="/cursos/apagar" method="post" enctype="multipart/form-data">
+
+							<div class="form-row">
+								<div class="form-group col-lg-6 col-md-8 mx-auto text-center">
+									<label for="apagarCursoId">Curso</label>
+									<select id="apagarCursoId" name="id" class="form-control" required>
+										<option value="" selected>Selecione o curso</option>
+										<?php foreach($this->cursos as $key => $curso) { ?> 
+											<option value="<?= $curso['id'] ?>"><?= $curso['curso']?></option>
+										<?php } ?>
+									</select>
+								</div>
+							</div>
+
+							<div class="form-row mt-4">
+
+								<div class="form-group col-lg-2 col-md-4 mx-auto">
+									<button class="btn btn-outline-danger w-100" type="submit">Apagar</button>
+								</div>
+
+							</div>
+
+						</form>
+
+					</div>
+
+				</div>
+
+			</div>
+
+		</div>
+
+	</div>
+
+
+<!-- SECOES -->
+	<div class="container" id="secoes">
+
+	<div class="row py-5">
+
+		<div class="col-md-12 text-center">
+
+			<span class="display-4">Seções</span>
+			<blockquote class="blockquote text-muted">Crie, edite ou apague seções</blockquote>
+
+		</div>
+
+	</div>
+
+	<!-- CRIAR SEÇÃO -->
+
+		<div id="secaoc"></div>
+
+		<?php if(isset($_GET['status']) && $_GET['status'] == 4) { ?>
+
+			<div class="alert alert-success alert-dismissible fade show text-center mt-5" role="alert">
+				<h4>A seção foi criada com sucesso.</h4> 
+				<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+
+		<?php } ?> 
+		
+		<div class="row">
+
+			<div class="col-md-8 mx-auto border shadow bg-white rounded">
+
+
+				<div class="row mt-4">
+
+					<div class="col text-center">
+
+						<p class="title">Criar seção</p>
+						<p class="subtitle text-muted font-italic">Crie uma nova seção para algum curso</p>
+
+					</div>
+
+				</div>
+
+				<div class="row my-3">
+				
+					<div class="col">
+
+						<!-- form -->
+						<form action="/cursos/criarSecao" method="post">
+
+							<div class="form-row">
+								<div class="form-group col-lg-6 col-md-8 mx-auto text-center">
+									<label for="CriarSecaoIdCurso">Curso</label>
+									<select id="CriarSecaoIdCurso" name="id_curso" class="form-control" required>
+										<option value="" >Selecione o curso</option>
+
+										<?php foreach($this->cursos as $key => $curso) { ?>
+											<option value="<?= $curso['id'] ?>"><?= $curso['curso']?></option>
+										<?php } ?>
+									</select>
+									
+								</div>
+							</div>
+						
+							<div class="form-row">
+								<div class="form-group col-lg-6 col-md-8 mx-auto text-center">
+									<label for="CriarSecaoNome">Nome da seção</label>
+									<input class="form-control" type="text" name="nome" maxlength="50" placeholder="Digite um nome para a seção" id="CriarSecaoNome" required>
+								</div>
+							</div>
+
+							<div class="form-row">
+								<div class="form-group col-lg-6 col-md-8 mx-auto text-center">
+									<label for="CriarSecaoStatus">Status da seção</label>
+									<select id="CriarSecaoStatus" name="status" class="form-control">
+										<option value="">Selecione o status</option>
+										<option value="1">Publicada</option>
+										<option value="0">Não publicada</option>
+									</select>
+								</div>
+							</div>
+
+							<div class="form-row mt-4">
+
+								<div class="form-group col-lg-2 col-md-4 mx-auto">
+									<button class="btn btn-dark w-100" type="submit">Criar</button>
+								</div>
+
+							</div>
+						
+						</form>
+					
+					</div>
+				
+				</div>
+
+			</div>
+			
+		</div>
+
+
+	<!-- EDITAR SEÇÃO  -->
+
+		<div id="secaoe"></div>
+
+		<?php if(isset($_GET['status']) && $_GET['status'] == 5) { ?>
+
+			<div class="alert alert-success alert-dismissible fade show text-center mt-5" role="alert">
+				<h4>A seção foi editada com sucesso.</h4> 
+				<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+
+		<?php } ?>
+		
+		<div class="row my-5">
+
+			<div class="col-md-8 mx-auto border shadow bg-white rounded" id="editar">
+
+				<div class="row mt-4">
+
+					<div class="col text-center">
+
+						<p class="title">Editar seção</p>
+						<p class="subtitle text-muted font-italic">Edite uma seção já existente</p>
+
+					</div>
+
+				</div>
+
+				<div class="row my-3">
+		
+					<div class="col">
+						<?php if(isset($_GET['idc'])) { 
+							$i3 = 0;
+							$ids = '';
+							$idc = $_GET['idc'];
+							while ($this->cursos[$i3]['id'] != $idc) {
+								$i3++;
+							} 
+						?>
+
+							<!-- form -->
+							<form action="/cursos/editarSecao" method="post">
+								<div class="form-row">
+									<div class="form-group col-lg-6 col-md-8 mx-auto text-center">
+										<label for="editarSecaoIdCurso">Curso</label>
+										<select id="editarSecaoIdCurso" name="id_curso" class="form-control" required>
+											<option value="" selected>Selecione o curso</option>
+											<?php foreach($this->cursos as $key => $curso) { 
+												if($curso['id'] == $idc) { ?> 
+												<option value="<?= $curso['id'] ?>" selected><?= $curso['curso']?></option>
+											<?php } else { ?>
+												<option value="<?= $curso['id'] ?>"><?= $curso['curso']?></option>
+											<?php }} ?>
+										</select>
+
+										<button type="button"class="btn btn-light text-muted mt-2" onclick="verificaSecoesEditar()">Validar seções do curso</button>
+									</div>
+								</div>
+
+								<div class="form-row">
+									<div class="form-group col-lg-6 col-md-8 mx-auto text-center">
+										<label for="editarSecaoId">Seção</label>
+										<select id="editarSecaoId" name="id" class="form-control" required>
+											<?php foreach($this->secoesPorCurso as $key => $secao) {
+												if (isset($this->secoesPorCurso[0])) { ?>
+												<option value="<?= $secao['id'] ?>"><?= $secao['secao']?></option>
+											<?php }} if (!isset($this->secoesPorCurso[0])) { ?>
+												<option value="" selected disabled>Este curso ainda não possui seções</option>
+											<?php } ?>
+										</select>
+									</div>
+								</div>
+								
+								
+								<div class="form-row">
+									<div class="form-group col-lg-6 col-md-8 mx-auto text-center">
+										<label for="editarSecaoNome">Editar nome</label>
+											<?php if (isset($this->secoesPorCurso[0])) { ?>
+												<input class="form-control" type="text" name="nome" maxlength="50" placeholder="Digite um novo nome para seção" id="editarSecaoNome" >
+											<?php } else { ?>
+												<input class="form-control" type="text" name="nome" maxlength="50" placeholder="Este curso ainda não possui seções" id="editarSecaoNome" readonly >
+											<?php } ?>
+									</div>
+								</div>
+
+								<div class="form-row">
+									<div class="form-group col-lg-6 col-md-8 mx-auto text-center">
+										<label for="editarSecaoStatus">Editar status</label>
+										<select id="editarSecaoStatus" name="status" class="form-control">
+											<?php if (isset($this->secoesPorCurso[0])) { ?>
+												<option value="" selected>Selecione um status</option>
+												<option value="1" >Publicada</option>
+												<option value="0" >Não publicada</option>
+											<?php } else { ?>
+												<option value="" selected disabled>Este curso ainda não possui seções</option>
+											<?php } ?>
+											
+										</select>
+									</div>
+								</div>
+
+								<div class="form-row mt-4">
+
+									<div class="form-group col-lg-2 col-md-4 mx-auto">
+										<button class="btn btn-dark w-100" type="submit">Editar</button>
+									</div>
+
+								</div>
+
+							</form>
+
+						<?php } else { ?>
+
+							<form action="/cursos/editarSecao" method="post">
+								<div class="form-row">
+									<div class="form-group col-lg-6 col-md-8 mx-auto text-center">
+										<label for="editarSecaoIdCurso">Curso</label>
+										<select id="editarSecaoIdCurso" name="id_curso" class="form-control" required>
+											<option value="" selected>Selecione o curso</option>
+											<?php foreach($this->cursos as $key => $curso) { ?> 
+												<option value="<?= $curso['id'] ?>"><?= $curso['curso']?></option>
+											<?php } ?>
+										</select>
+
+										<button type="button"class="btn btn-light text-muted mt-2" onclick="verificaSecoesEditar()">Validar seções do curso</button>
+									</div>
+								</div>
+
+								<div class="form-row">
+									<div class="form-group col-lg-6 col-md-8 mx-auto text-center">
+										<label for="editarSecaoId">Seção</label>
+										<select id="editarSecaoId" name="id" class="form-control" required>
+											<option value="" selected disabled>Valide um curso primeiro</option>
+										</select>
+									</div>
+								</div>
+								
+								
+								<div class="form-row">
+									<div class="form-group col-lg-6 col-md-8 mx-auto text-center">
+										<label for="editarSecaoNome">Editar nome</label>
+										<input class="form-control" type="text" name="nome" maxlength="50" placeholder="Valide um curso primeiro" id="editarSecaoNome" readonly >
+									</div>
+								</div>
+
+								<div class="form-row">
+									<div class="form-group col-lg-6 col-md-8 mx-auto text-center">
+										<label for="editarSecaoStatus">Editar status</label>
+										<select id="editarSecaoStatus" name="status" class="form-control">
+											<option value="" selected disabled>Valide um curso primeiro</option>
+										</select>
+									</div>
+								</div>
+
+								<div class="form-row mt-4">
+
+									<div class="form-group col-lg-2 col-md-4 mx-auto">
+										<button class="btn btn-dark w-100" type="submit">Editar</button>
+									</div>
+
+								</div>
+
+							</form>
+
+						<?php } ?>
+
+					</div>
+				
+				</div>
+
+			</div>
+
+		</div>
+
+
+	<!-- APAGAR SEÇÃO -->
+
+		<div id="secaoa"></div>
+		
+		<?php if(isset($_GET['status']) && $_GET['status'] == 6) { ?>
+
+			<div class="alert alert-warning alert-dismissible fade show text-center mt-5" role="alert">
+				<h4>A seção foi apagada.</h4> 
+				<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+
+		<?php }?>
+
+		<div class="row my-5">
+
+			<div class="col-md-8 mx-auto border shadow bg-white rounded">
+
+				<div class="row mt-4">
+
+					<div class="col text-center">
+
+						<p class="title">Apagar seção</p>
+						<p class="subtitle text-muted font-italic">Apagar uma seção</p>
+
+					</div>
+
+				</div>
+
+				<div class="row my-3">
+		
+					<div class="col">
+
+					<?php if(isset($_GET['idc'])) { 
+							$i3 = 0;
+							$idc = $_GET['idc'];
+							while ($this->cursos[$i3]['id'] != $idc) {
+								$i3++;
+							} 
+						?>
+
+							<form action="/cursos/apagarSecao" method="post">
+								<div class="form-row">
+									<div class="form-group col-lg-6 col-md-8 mx-auto text-center">
+										<label for="apagarSecaoIdCurso">Curso</label>
+										<select id="apagarSecaoIdCurso" name="id_curso" class="form-control" required>
+											<option value="" selected>Selecione o curso</option>
+											<?php foreach($this->cursos as $key => $curso)  { 
+												if($curso['id'] == $idc) { ?>
+												<option value="<?= $curso['id'] ?>" selected><?= $curso['curso']?></option>
+											<?php } else { ?>
+												<option value="<?= $curso['id'] ?>"><?= $curso['curso']?></option>
+											<?php }} ?>
+										</select>
+
+										<button type="button"class="btn btn-light text-muted mt-2" onclick="verificaSecoesApagar()">Recuperar seções do curso</button>
+									</div>
+								</div>
+
+								<div class="form-row">
+									<div class="form-group col-lg-6 col-md-8 mx-auto text-center">
+										<label for="apagarSecaoId">Seção</label>
+										<select id="apagarSecaoId" name="id" class="form-control" required>
+											<?php foreach($this->secoesPorCurso as $key => $secao) {
+												if (isset($this->secoesPorCurso[0])) { ?>
+												<option value="<?= $secao['id'] ?>"><?= $secao['secao']?></option>
+											<?php }} if (!isset($this->secoesPorCurso[0])) { ?>
+												<option value="" selected disabled>Este curso ainda não possui seções</option>
+											<?php } ?>
+										</select>
+									</div>
+								</div>
+
+								<div class="form-row mt-4">
+
+									<div class="form-group col-lg-2 col-md-4 mx-auto">
+										<button class="btn btn-outline-danger w-100" type="submit">Apagar</button>
+									</div>
+
+								</div>
+
+							</form>
+
+						<?php } else { ?>
+
+							<form action="/cursos/apagarSecao" method="post">
+								<div class="form-row">
+									<div class="form-group col-lg-6 col-md-8 mx-auto text-center">
+										<label for="apagarSecaoIdCurso">Curso</label>
+										<select id="apagarSecaoIdCurso" name="id_curso" class="form-control" required>
+											<option value="" selected>Selecione o curso</option>
+											<?php foreach($this->cursos as $key => $curso) { ?> 
+												<option value="<?= $curso['id'] ?>"><?= $curso['curso']?></option>
+											<?php } ?>
+										</select>
+
+										<button type="button"class="btn btn-light text-muted mt-2" onclick="verificaSecoesApagar()">Validar seções do curso</button>
+									</div>
+								</div>
+
+								<div class="form-row">
+									<div class="form-group col-lg-6 col-md-8 mx-auto text-center">
+										<label for="apagarSecaoId">Seção</label>
+										<select id="apagarSecaoId" name="id" class="form-control" required>
+											<option value="" selected disabled>Valide um curso primeiro</option>
+										</select>
+									</div>
+								</div>
+
+								<div class="form-row mt-4">
+
+									<div class="form-group col-lg-2 col-md-4 mx-auto">
+										<button class="btn btn-outline-danger w-100" type="submit">Apagar</button>
+									</div>
+
+								</div>
+
+							</form>
+
+						<?php } ?>
+
+					</div>
+
+				</div>
+
+			</div>
+
+		</div>
+			
+	</div>
+
+
+<!-- AULAS -->
+	<div class="container" id="aulas">
+
+	<div class="row py-5">
+
+		<div class="col-md-12 text-center">
+
+			<span class="display-4">Aulas</span>
+			<blockquote class="blockquote text-muted">Crie, edite ou apague aulas</blockquote>
+
+		</div>
+
+	</div>
+
+	<!-- CRIAR AULA -->
+
+		<div id="aulac"></div>
+
+		<?php if(isset($_GET['status']) && $_GET['status'] == 7) { ?>
+
+			<div class="alert alert-success alert-dismissible fade show text-center mt-5" role="alert">
+				<h4>A aula foi criada com sucesso.</h4> 
+				<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+
+		<?php } ?> 
+
+		<div class="row">
+
+			<div class="col-md-8 mx-auto border shadow bg-white rounded">
+
+				<div class="row mt-4">
+
+					<div class="col text-center">
+
+						<p class="title">Criar aula</p>
+						<p class="subtitle text-muted font-italic">Crie uma nova aula para alguma seção</p>
+
+					</div>
+
+				</div>
+
+				<div class="row my-3">
+				
+					<div class="col">
+						<form action="/cursos/criarAula" method="post">
+
+							<div class="form-row">
+								<div class="form-group col-lg-6 col-md-8 mx-auto text-center">
+									<label for="criarAulaIdSecao">Seção</label>
+									<select id="criarAulaIdSecao" name="id_secao" class="form-control" required>
+										<option value="" >Selecione a seção</option>
+
+										<?php foreach($this->secoes as $key => $secao) { ?>
+											<option value="<?= $secao['id'] ?>">
+												<?= $secao['secao']?> 
+												<small class="text-muted">
+													<?php foreach($this->cursos as $indice => $curso) {
+														if ($curso['id'] == $secao['id_curso']) {
+															echo '('.$curso['curso'].')';
+														}
+													} ?>
+												</small> 
+											</option>
+										<?php } ?>
+									</select>
+									
+								</div>
+							</div>
+						
+							<div class="form-row">
+								<div class="form-group col-lg-6 col-md-8 mx-auto text-center">
+									<label for="criarAulaTitulo">Título da aula</label>
+									<input class="form-control" type="text" name="titulo" maxlength="50" placeholder="Digite um título para a aula" id="criarAulaTitulo" required>
+								</div>
+							</div>
+
+							<div class="form-row">
+								<div class="form-group col-lg-6 col-md-8 mx-auto text-center">
+									<label for="criarAulaDescricao">Descrição <span class="criarAulaDescricao text-muted">(200)</span></label>
+									<textarea class="form-control" type="textarea" name="descricao" rows="4" maxlength="200" placeholder="Digite uma breve descrição da aula" id="criarAulaDescricao" required></textarea>
+								</div>
+							</div>
+
+							<div class="form-row">
+								<div class="form-group col-lg-6 col-md-8 mx-auto text-center">
+									<label for="criarAulaStatus">Status da aula</label>
+									<select id="criarAulaStatus" name="status" class="form-control">
+										<option value="">Selecione o status</option>
+										<option value="1">Publicada</option>
+										<option value="0">Não publicada</option>
+									</select>
+								</div>
+							</div>
+
+							<div class="form-row mt-4">
+
+								<div class="form-group col-lg-2 col-md-4 mx-auto">
+									<button class="btn btn-dark w-100" type="submit">Criar</button>
+								</div>
+
+							</div>
+						
+						</form>
+					
+					</div>
+				
+				</div>
+
+			</div>
+			
+		</div>
+
+
+	<!-- EDITAR AULA -->
+
+		<div id="aulae"></div>
+
+		<?php if(isset($_GET['status']) && $_GET['status'] == 8) { ?>
+
+			<div class="alert alert-success alert-dismissible fade show text-center mt-5" role="alert">
+				<h4>A aula foi editada com sucesso.</h4> 
+				<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+
+		<?php } ?>
+
+		<div class="row my-5">
+
+			<div class="col-md-8 mx-auto border shadow bg-white rounded" id="editar">
+
+				<div class="row mt-4">
+
+					<div class="col text-center">
+
+						<p class="title">Editar aula</p>
+						<p class="subtitle text-muted font-italic">Edite uma aula já existente</p>
+
+					</div>
+
+				</div>
+
+				<div class="row my-3">
+
+					<div class="col">
+						<?php if(isset($_GET['idse'])) { 
+							$i4 = 0;
+							$idse = $_GET['idse'];
+							while ($this->secoes[$i4]['id'] != $idse) {
+								$i4++;
+							} 
+						?>
+
+							<!-- form -->
+							<form action="/cursos/editarAula" method="post">
+								<div class="form-row">
+									<div class="form-group col-lg-6 col-md-8 mx-auto text-center">
+										<label for="editarAulaIdSecao">Seção</label>
+										<select id="editarAulaIdSecao" name="id_secao" class="form-control" required>
+											<option value="" selected>Selecione a seção</option>
+												<?php foreach($this->secoes as $key => $secao) {
+													if ($secao['id'] == $idse) { ?>
+													<option value="<?= $secao['id'] ?>" selected>
+														<?= $secao['secao']?>
+														<small class="text-muted">
+															<?php foreach($this->cursos as $indice => $curso) {
+																if ($curso['id'] == $secao['id_curso']) {
+																	echo '('.$curso['curso'].')';
+																}
+															} ?>
+														</small>
+													</option>
+												<?php } else { ?>
+													<option value="<?= $secao['id'] ?>" >
+														<?= $secao['secao']?>
+														<small class="text-muted">
+															<?php foreach($this->cursos as $indice => $curso) {
+																if ($curso['id'] == $secao['id_curso']) {
+																	echo '('.$curso['curso'].')';
+																}
+															} ?>
+														</small>
+													</option>
+												<?php }} ?>
+											
+										</select>
+
+										<button type="button"class="btn btn-light text-muted mt-2" onclick="verificaAulasEditar()">Validar aulas da seção</button>
+									</div>
+								</div>
+
+								<div class="form-row">
+									<div class="form-group col-lg-6 col-md-8 mx-auto text-center">
+										<label for="editarAulaId">Aula</label>
+										<select id="editarAulaId" name="id" class="form-control" required>
+											<?php foreach($this->aulasPorSecao as $key => $aula) {
+													if (isset($this->aulasPorSecao[0])) {
+														if (isset($_GET['ida']) && $aula['id'] == $_GET['ida']) { ?>
+															<option value="<?= $aula['id'] ?>" selected><?= $aula['titulo']?></option>
+														<?php } else { ?>
+															<option value="<?= $aula['id'] ?>"><?= $aula['titulo']?></option>
+												<?php }}} if (!isset($this->aulasPorSecao[0])) { ?>
+													<option value="" selected disabled>Esta seção ainda não possui aulas</option>
+												<?php } ?>
+										</select>
+										
+										<?php if(isset($this->aulasPorSecao[0])) { ?>
+											<button type="button"class="btn btn-light text-muted mt-2" onclick="verificaAulasEditarDados()">Recuperar informações da aula</button>
+										<?php } ?>
+									</div>
+								</div>
+
+								<?php if(isset($_GET['ida'])) { 
+									$i5 = 0;
+									$ida = $_GET['ida'];
+									while ($this->aulasPorSecao[$i5]['id'] != $ida) {
+										$i5++;
+									} 
+									?>
+
+									<div class="form-row">
+										<div class="form-group col-lg-6 col-md-8 mx-auto text-center">
+											<label for="editarAulaTitulo">Editar título</label>
+											<input class="form-control" type="text" name="titulo" maxlength="50" value="<?=$this->aulasPorSecao[$i5]['titulo']?>" placeholder="Digite um novo título" id="editarAulaTitulo" >
+										</div>
+									</div>
+
+									<div class="form-row">
+										<div class="form-group col-lg-6 col-md-8 mx-auto text-center">
+											<label for="editarAulaDescricao">Editar descrição <span class="editarAulaDescricao text-muted">(200)</span> </label>
+											<input class="form-control" type="text" name="descricao" maxlength="200" value="<?=$this->aulasPorSecao[$i5]['descricao']?>" placeholder="Digite uma nova descrição" id="editarAulaDescricao" >
+										</div>
+									</div>
+
+									<div class="form-row">
+										<div class="form-group col-lg-6 col-md-8 mx-auto text-center">
+											<label for="editarAulaStatus">Editar status</label>
+											<select id="editarAulaStatus" name="status" class="form-control">
+												<?php if($this->aulasPorSecao[$i5]['status'] == 1) { ?>
+													<option value="" >Selecione o status da aula</option>
+													<option value="1" selected>Publicada</option>
+													<option value="0" >Não publicada</option>
+												<?php } else if($this->aulasPorSecao[$i5]['status'] == 0 ) { ?>
+													<option value="" >Selecione o status da aula</option>
+													<option value="1" >Publicada</option>
+													<option value="0" selected>Não publicada</option>
+												<?php } else { ?>
+													<option value="" selected>Selecione o status da aula</option>
+													<option value="1" >Publicada</option>
+													<option value="0" >Não publicada</option>
+												<?php } ?>
+												
+											</select>
+										</div>
+									</div>
+
+								<?php } else {
+									if(isset($this->aulasPorSecao[0])) {
+									?>
+								
+									<div class="form-row">
+										<div class="form-group col-lg-6 col-md-8 mx-auto text-center">
+											<label for="editarAulaTitulo">Editar título</label>
+											<input class="form-control" type="text" name="titulo" maxlength="50" placeholder="Digite uma novo título" id="editarAulaTitulo" >
+										</div>
+									</div>
+
+									<div class="form-row">
+										<div class="form-group col-lg-6 col-md-8 mx-auto text-center">
+											<label for="editarAulaDescricao">Editar descrição <span class="editarAulaDescricao text-muted">(200)</span> </label>
+											<input class="form-control" type="text" name="descricao" maxlength="200" placeholder="Digite uma nova descrição" id="editarAulaDescricao" >
+										</div>
+									</div>
+
+									<div class="form-row">
+										<div class="form-group col-lg-6 col-md-8 mx-auto text-center">
+											<label for="editarAulaStatus">Editar status</label>
+											<select id="editarAulaStatus" name="status" class="form-control">
+												<option value="" selected>Selecione o status da aula</option>
+												<option value="1" >Publicada</option>
+												<option value="0" >Não publicada</option>
+											</select>
+										</div>
+									</div>
+
+								<?php 	} else { ?>
+
+									<div class="form-row">
+										<div class="form-group col-lg-6 col-md-8 mx-auto text-center">
+											<label for="editarAulaTitulo">Editar título</label>
+											<input class="form-control" type="text" name="titulo" maxlength="50" placeholder="Esta seção ainda não possui aulas" id="editarAulaTitulo" readonly>
+										</div>
+									</div>
+
+									<div class="form-row">
+										<div class="form-group col-lg-6 col-md-8 mx-auto text-center">
+											<label for="editarAulaDescricao">Editar descrição <span class="editarAulaDescricao text-muted">(200)</span> </label>
+											<input class="form-control" type="text" name="descricao" maxlength="200" placeholder="Esta seção ainda não possui aulas" id="editarAulaDescricao" readonly>
+										</div>
+									</div>
+
+									<div class="form-row">
+										<div class="form-group col-lg-6 col-md-8 mx-auto text-center">
+											<label for="editarAulaStatus">Editar status</label>
+											<select id="editarAulaStatus" name="status" class="form-control">
+												<option value="" selected disabled>Esta seção ainda não possui aulas</option>
+											</select>
+										</div>
+									</div>
+
+								<?php 	} ?>
+									
+								<?php } ?>
+
+								<div class="form-row mt-4">
+
+									<div class="form-group col-lg-2 col-md-4 mx-auto">
+										<button class="btn btn-dark w-100" type="submit">Editar</button>
+									</div>
+
+								</div>
+
+							</form>
+						
+						<?php } else { ?>
+
+							<form action="/cursos/editarAula" method="post">
+								<div class="form-row">
+									<div class="form-group col-lg-6 col-md-8 mx-auto text-center">
+										<label for="editarAulaIdSecao">Seção</label>
+										<select id="editarAulaIdSecao" name="id_secao" class="form-control" required>
+											<option value="" selected>Selecione a seção</option>
+											<?php foreach($this->secoes as $key => $secao) { ?> 
+												<option value="<?= $secao['id'] ?>">
+													<?= $secao['secao']?>
+													<small class="text-muted">
+														<?php foreach($this->cursos as $indice => $curso) {
+															if ($curso['id'] == $secao['id_curso']) {
+																echo '('.$curso['curso'].')';
+															}
+														} ?>
+													</small>
+												</option>
+											<?php } ?>
+										</select>
+
+										<button type="button"class="btn btn-light text-muted mt-2" onclick="verificaAulasEditar()">Validar aulas da seção</button>
+									</div>
+								</div>
+
+								<div class="form-row">
+									<div class="form-group col-lg-6 col-md-8 mx-auto text-center">
+										<label for="editarAulaId">Aula</label>
+										<select id="editarAulaId" name="id" class="form-control" required>
+											<option value="" selected disabled>Valide uma seção primeiro</option>
+										</select>
+									</div>
+								</div>
+								
+								
+								<div class="form-row">
+									<div class="form-group col-lg-6 col-md-8 mx-auto text-center">
+										<label for="editarAulaTitulo">Editar título</label>
+										<input class="form-control" type="text" name="titulo" maxlength="50" placeholder="Valide uma seção primeiro" id="editarAulaTitulo" readonly >
+									</div>
+								</div>
+
+								<div class="form-row">
+									<div class="form-group col-lg-6 col-md-8 mx-auto text-center">
+										<label for="editarAulaDescricao">Editar descrição</label>
+										<input class="form-control" type="text" name="descricao" maxlength="50" placeholder="Valide uma seção primeiro" id="editarAulaDescricao" readonly >
+									</div>
+								</div>
+
+								<div class="form-row">
+									<div class="form-group col-lg-6 col-md-8 mx-auto text-center">
+										<label for="editarAulaStatus">Editar status</label>
+										<select id="editarAulaStatus" name="status" class="form-control">
+											<option value="" selected disabled>Valide uma seção primeiro</option>
+										</select>
+									</div>
+								</div>
+
+								<div class="form-row mt-4">
+
+									<div class="form-group col-lg-2 col-md-4 mx-auto">
+										<button class="btn btn-dark w-100" type="submit">Editar</button>
+									</div>
+
+								</div>
+
+							</form>
+
+						<?php } ?>
+
+					</div>
+				
+				</div>
+
+			</div>
+
+		</div>
+
+
+	<!-- APAGAR AULA -->
+
+		<div id="aulaa"></div>
+
+		<?php if(isset($_GET['status']) && $_GET['status'] == 9) { ?>
+
+			<div class="alert alert-warning alert-dismissible fade show text-center mt-5" role="alert">
+				<h4>A aula foi apagada.</h4> 
+				<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+
+		<?php }?>
+
+		<div class="row my-5">
+
+			<div class="col-md-8 mx-auto border shadow bg-white rounded">
+
+				<div class="row mt-4">
+
+					<div class="col text-center">
+
+						<p class="title">Apagar aula</p>
+						<p class="subtitle text-muted font-italic">Apagar uma aula</p>
+
+					</div>
+
+				</div>
+
+				<div class="row my-3">
+
+					<div class="col">
+
+					<?php if(isset($_GET['idse'])) { 
+							$i5 = 0;
+							$idse = $_GET['idse'];
+							while ($this->secoes[$i5]['id'] != $idse) {
+								$i5++;
+							} 
+						?>
+
+							<form action="/cursos/apagarAula" method="post">
+								
+							<div class="form-row">
+									<div class="form-group col-lg-6 col-md-8 mx-auto text-center">
+										<label for="apagarAulaIdSecao">Seção</label>
+										<select id="apagarAulaIdSecao" name="id_secao" class="form-control" required>
+											<option value="" selected>Selecione a seção</option>
+												<?php foreach($this->secoes as $key => $secao) {
+													if ($secao['id'] == $idse) { ?>
+													<option value="<?= $secao['id'] ?>" selected>
+														<?= $secao['secao']?>
+														<small class="text-muted">
+															<?php foreach($this->cursos as $indice => $curso) {
+																if ($curso['id'] == $secao['id_curso']) {
+																	echo '('.$curso['curso'].')';
+																}
+															} ?>
+														</small>
+													</option>
+												<?php } else { ?>
+													<option value="<?= $secao['id'] ?>" >
+														<?= $secao['secao']?>
+														<small class="text-muted">
+															<?php foreach($this->cursos as $indice => $curso) {
+																if ($curso['id'] == $secao['id_curso']) {
+																	echo '('.$curso['curso'].')';
+																}
+															} ?>
+														</small>
+													</option>
+												<?php }} ?>
+											
+										</select>
+
+										<button type="button"class="btn btn-light text-muted mt-2" onclick="verificaAulasApagar()">Validar aulas da seção</button>
+									</div>
+								</div>
+
+								<div class="form-row">
+									<div class="form-group col-lg-6 col-md-8 mx-auto text-center">
+										<label for="apagarAulaId">Aula</label>
+										<select id="apagarAulaId" name="id" class="form-control" required>
+											<?php foreach($this->aulasPorSecao as $key => $aula) {
+													if (isset($this->aulasPorSecao[0])) {
+														if (isset($_GET['ida']) && $aula['id'] == $_GET['ida']) { ?>
+															<option value="<?= $aula['id'] ?>" selected><?= $aula['titulo']?></option>
+														<?php } else { ?>
+															<option value="<?= $aula['id'] ?>"><?= $aula['titulo']?></option>
+												<?php }}} if (!isset($this->aulasPorSecao[0])) { ?>
+													<option value="" selected disabled>Esta seção ainda não possui aulas</option>
+												<?php } ?>
+										</select>
+									</div>
+								</div>
+
+								<div class="form-row mt-4">
+
+									<div class="form-group col-lg-2 col-md-4 mx-auto">
+										<button class="btn btn-outline-danger w-100" type="submit">Apagar</button>
+									</div>
+
+								</div>
+
+							</form>
+
+						<?php } else { ?>
+
+							<form action="/cursos/apagarAula" method="post">
+								<div class="form-row">
+									<div class="form-group col-lg-6 col-md-8 mx-auto text-center">
+										<label for="apagarAulaIdSecao">Seção</label>
+										<select id="apagarAulaIdSecao" name="id_secao" class="form-control" required>
+											<option value="" selected>Selecione a seção</option>
+											<?php foreach($this->secoes as $key => $secao) { ?> 
+												<option value="<?= $secao['id'] ?>">
+													<?= $secao['secao']?>
+													<small class="text-muted">
+														<?php foreach($this->cursos as $indice => $curso) {
+															if ($curso['id'] == $secao['id_curso']) {
+																echo '('.$curso['curso'].')';
+															}
+														} ?>
+													</small>
+												</option>
+											<?php } ?>
+										</select>
+
+										<button type="button"class="btn btn-light text-muted mt-2" onclick="verificaAulasApagar()">Validar seções do curso</button>
+									</div>
+								</div>
+
+								<div class="form-row">
+									<div class="form-group col-lg-6 col-md-8 mx-auto text-center">
+										<label for="apagarAulaId">Aula</label>
+										<select id="apagarAulaId" name="id" class="form-control" required>
+											<option value="" selected disabled>Valide uma seção primeiro</option>
+										</select>
+									</div>
+								</div>
+
+								<div class="form-row mt-4">
+
+									<div class="form-group col-lg-2 col-md-4 mx-auto">
+										<button class="btn btn-outline-danger w-100" type="submit">Apagar</button>
+									</div>
+
+								</div>
+
+							</form>
+
+						<?php } ?>
+
+					</div>
+
+				</div>
+
+			</div>
+
+		</div>
+
+<?php require_once "../app/views/app/cursosUsuario.phtml" ?>
+
+<script>
+
+	var $doc = $('html, body');
+	$('a').click(function() {
+		$doc.animate({
+			scrollTop: $( $.attr(this, 'href') ).offset().top
+		}, 1000);
+		return false;
+	});
+
+</script>
+	

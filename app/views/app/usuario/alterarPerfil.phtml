@@ -1,0 +1,76 @@
+<?php require_once "../app/views/navbar.phtml" ?>
+
+
+
+<div class="container">
+
+    <div class="row py-5">
+
+        <div class="col-md-12 mx-auto text-center">
+
+            <span class="display-4"">Perfil</span>
+            <blockquote class="blockquote text-muted">Adicione ou modifique informações sobre você</blockquote>
+
+        </div>
+
+    </div>
+
+    <div class="row">
+
+        <div class="col-md-8 mx-auto border rounded">
+
+            <div class="row mt-4">
+
+                <div class="col text-center">
+
+                    <p>Alterações realizadas com sucesso!</p>
+                    <a href="/perfil" class="btn btn-dark">Voltar</a>
+
+                </div>
+
+            </div>
+
+            <div class="row mt-4">
+
+                <div class="col">
+
+                        <?php if($this->view->erroAlterar) { ?>
+
+                            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            <strong>Erro na validação dos dados!</strong> 
+                            <br>
+                            Verifique se os campos foram preenchidos corretamente.
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                            </div>
+
+                        <?php } ?>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+
+		$('#cel').maskbrphone({  
+			useDdd           : true,
+			useDddParenthesis: true,
+			dddSeparator     : ' ',
+			numberSeparator  : '-'
+		});
+
+        $('#tel').maskbrphone({  
+			useDdd           : true,
+			useDddParenthesis: true,
+			dddSeparator     : ' ',
+			numberSeparator  : '-'
+		});
+
+</script>

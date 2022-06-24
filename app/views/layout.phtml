@@ -1,0 +1,129 @@
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title><?= $this->titulo ?></title>
+
+		<link rel="icon" href="img/favicon-cl.png" type="image/x-icon">
+
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+
+		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+		
+		<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+		
+		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+
+		<!-- AJAX / JQUERY -->
+
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
+
+		<!-- DATA TABLES -->
+
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.css">
+
+		<link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css">
+
+		<script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.js"></script>
+		
+		<script type="text/javascript" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+		
+		<script type="text/javascript" src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
+
+		
+		<link rel="stylesheet" type="text/css" href="/css/style.css">
+
+		<script>
+					/**
+			*  maskbrphone for jQuery, version 2.0.0 (https://github.com/masimao/maskbrphone)
+			*  (c) 2014 Márcio Mazzucato (https://github.com/masimao)
+			*
+			*  maskbrphone for jQuery is freely distributable under the terms of an MIT-style license.
+			*/
+			(function($) {
+
+			$.fn.maskbrphone = function(options) {
+
+				var defaults = {
+					useDdd            : false,
+					useDddParenthesis : true,
+					dddSeparator      : ' ',
+					numberSeparator   : '-'
+				};
+
+				var settings = $.extend({}, defaults, options);
+				var plugin = this;
+
+				var initialize = function() {
+
+					return plugin.each( function() {
+						$(this).val(applyMask($(this).val()));
+
+						$(this).keyup(function() {
+							$(this).val(applyMask($(this).val()));
+						});
+					});
+				};
+
+				var applyMask = function(input) {
+
+					if ( ! input.length) {
+						return '';
+					}
+
+					var fone = input.replace(/\D/g, ''); // Remove tudo o que não for dígito
+
+					var ddd = '',
+						prefix,
+						suffix;
+
+					if ( ! settings.useDdd && input.charAt(0) === '9') {
+						prefix = fone.substring(0, 5);
+						suffix = fone.substring(5, 9);
+					} else if (settings.useDdd && input.charAt(5) === '9') {
+						ddd = fone.substring(0, 2);
+						prefix = fone.substring(2, 7);
+						suffix = fone.substring(7, 11);
+					} else if ( ! settings.useDdd && input.charAt(0) !== '9') {
+						prefix = fone.substring(0, 4);
+						suffix = fone.substring(4, 8);
+					} else if (settings.useDdd && input.charAt(5) !== '9') {
+						ddd = fone.substring(0, 2);
+						prefix = fone.substring(2, 6);
+						suffix = fone.substring(6, 10);
+					}
+
+					if (settings.useDdd) {
+						ddd = (settings.useDddParenthesis ? '(' : '') + ddd;
+					}
+
+					if (settings.useDdd && prefix.length > 0) {
+						ddd += (settings.useDddParenthesis ? ')' : '') + settings.dddSeparator;
+					}
+
+					if (suffix.length > 0) {
+						prefix += settings.numberSeparator;
+					}
+
+					return ddd + prefix + suffix;
+				};
+
+				initialize();
+
+			};
+
+			}(jQuery));
+		</script>
+
+	</head>
+
+	<body>
+
+		<?= $this->content() ?>
+
+	</body>
+
+
+	
+</html>

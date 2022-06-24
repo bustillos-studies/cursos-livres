@@ -1,0 +1,107 @@
+<body class="bg-danger">
+<div class="container">
+	<div class="d-flex justify-content-center my-5">
+    	<div class="card" style="width: 36rem;">
+      		<div class="card-body">
+
+			  	<div class="d-flex justify-content-center">
+					<a href="/">
+						<img class="logo" src="img/favicon-cl.png" alt="Cursos Livres">
+					</a>	
+				</div>
+				
+				<div class="text-center">
+					<p><img  height="30" class="" src="img/logo-cl.png" alt="Cursos Livres"></p>
+					<span class="subtitle">Cursos diversos de aperfeiçoamento profissional</span>
+				</div>
+
+				<div class="row mt-4">
+
+				<div class="col">
+					<form method="post" action="/autenticar">
+						
+						<?php if($this->view->login == 'erro') { ?>
+						<div class="form-row">
+							<div class="col-md-5 form-group">
+								<input name="email" type="text" class="form-control" placeholder="E-mail">
+							</div>
+							<div class="col-md-5 form-group">
+								<input name="senha" type="password" class="form-control" placeholder="Senha">
+							</div>
+							<div class="col-md-2 form-group">
+								<button type="submit" class="btn btn-block btn-dark">Entrar</button>
+							</div>
+						</div>
+
+						<div class="row">
+							<div class="col">
+								<div class="alert alert-danger alert-dismissible fade show" role="alert">
+								<strong>Erro!</strong> 
+								<br>
+								Email ou senha inválidos.
+								<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+									<span aria-hidden="true">&times;</span>
+								</button>
+								</div>
+							</div>
+						</div>
+
+						<?php } else if($this->view->login == 'erro2') { ?>
+						<div class="form-row">
+							<div class="col-md-5 form-group">
+								<input name="email" type="text" class="form-control is-invalid" placeholder="E-mail">
+							</div>
+							<div class="col-md-5 form-group">
+								<input name="senha" type="password" class="form-control is-invalid" placeholder="Senha">
+							</div>
+							<div class="col-md-2 form-group">
+								<button type="submit" class="btn btn-block btn-dark">Entrar</button>
+							</div>
+						</div>
+
+						<div class="row">
+							<div class="col">
+								<div class="alert alert-danger alert-dismissible fade show" role="alert">
+								<strong>Erro!</strong> 
+								<br>
+								Faça o login antes de acessar ao conteúdo da rede.
+								<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+									<span aria-hidden="true">&times;</span>
+								</button>
+								</div>
+							</div>
+						</div>
+
+						<?php } else { ?>
+							
+						<div class="form-row">
+							<div class="col-md-5 form-group">
+								<input name="email" type="text" class="form-control" placeholder="E-mail">
+							</div>
+							<div class="col-md-5 form-group">
+								<input name="senha" type="password" class="form-control" placeholder="Senha">
+							</div>
+							<div class="col-md-2 form-group">
+								<button type="submit" class="btn btn-block btn-danger">Entrar</button>
+							</div>
+						</div>
+
+						<?php } ?>
+					</form>
+
+					<div class="row pl-5 pr-5">
+						<div class="col pl-5 pr-5 mx-auto text-center">
+							<h3 class="subtitle">Cadastre-se para ter acesso às aulas.</h3>
+							<a href="/cadastrar" class="btn btn-light btn-block mb-2">Cadastrar-se</a>
+						</div>					
+					</div>
+
+				</div>
+
+			</div>
+
+		</div>
+
+	</div>
+
+</div>

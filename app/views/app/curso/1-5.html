@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!-- Estilo customizado -->
+    <link rel="stylesheet" href="css/style.css">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <title>Gerenciamento de Processos</title>
+
+    
+</head>
+<body>
+    
+    <header>
+        <nav class="navbar navbar-expand-md navbar-dark bg-danger">
+            <div class="container text-white">
+                <a href="aula-2-gereciamento-pacotes.html" class="h3 font-weight-normal">Linux Debian</a>
+            </div>
+        </nav>
+    </header>
+    
+    <section>
+        <div class="container">
+            <div class="row"><!-- row -->
+                <div class="col-12 py-4 border-bottom">
+                    <h2>Gerenciamento de Processos</h2>
+                    <h4>Objetivos da Aula:</h4>
+                    <ul>
+                        <li>Enteder o que é o CPU Bound e I/O Bound.</li>
+                        <li>Processo zumbi.</li>
+                        <li>Processos e threads.</li>
+                        <li>---.</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12 py-4 border-bottom">
+                    
+                    <h3>Processo</h3>
+                    <p>Um processo é um programa em execução, todo processo possui um PID (Process Identification), que é o identificador do processo, em algarismos. </p>
+                    <p>Um processamento são cálculos executados na CPU, na qual é denominado CPU Bound, ou seja, quando um processo está em execução no processador.</p>
+                    <p>Quando um processo é I/O Bound ele aguarda uma aquisição ou uma saída de dados.</p>
+                    <h5>Processo Zumbi</h5>
+                    <p>Um processo zumbi é um processo na qual não possui um PID. Ele é um processo comum na qual perdeu seu processo pai, na qual consequentemente, acarreta na perda de seu PID.</p>
+
+                    <h5>Gerenciamento</h5>
+                    <p>Quando executamos algum comando, script ou iniciamos alguma programa, o kernel atribui a ele um número de processo (PID) e passa a gerenciar a quantidade de recursos que ele irá disponibilizar para essa atividade.</p>
+                    <p>Como haverá sempre diversos processos rodando simultaneamente na máquina o kernel tem uma lista de processos que necessitam de recursos. Como não existe atualmente um sistema realmente multitarefa, capaz de realizar diversas atividades realmente ao mesmo tempo, o kernel cria uma fila de processos e a percorre disponibilizando recursos de máquina para cada um deles por um determinado tempo. Quanto melhor essa distribuição for efetuada, melhor será o desempenho do sistema como um todo e mais próximo de um sistema multitarefas o sistema se parecerá.</p>
+                    <p>A forma como o kernel gerencia os processos é bastante inteligente e podemos sempre visualizar o status do processo num determinado instante, para determinar se ele está sendo executado neste mesmo instante ou se ele está aguardando tempo de máquina para que seja executado. Podemos visualizar todos os processos que estão rodando em nosso sistema com o programa que tira uma foto dessa estrutura, conhecido como snaPShot vulgo ps.</p>
+
+                </div>
+                <div class="col-12 py-4 border-bottom">
+                    
+                    <h3>Threads</h3>
+                    <p>Threads são processos que apresentam memória compartilhada. </p>
+                    <h5>MultiThread</h5>
+                    <p>São várias threads em execução compartilhando um mesmo alocamento.</p>
+                    
+                </div>
+                <div class="col-12 py-4 border-bottom">
+                    
+                    <h3>Comandos KILL, XKILL e KILLALL</h3>
+                    <p>Esses comandos tem como função matar um processo (fechar um processo) que esteja em execução no sistema. </p>
+                    <ul>
+                        <li>Kill</li>
+                        <p>Finaliza o processo a partir do PID indicado no comando:</p>
+                        <p class="border rounded p-2 bg-light text-danger d-inline">&#36; sudo kill &#60;PID&#62;</p><br><br>
+                        <p>Finaliza o processo:</p>
+                        <p class="border rounded p-2 bg-light text-danger d-inline">&#36; sudo kill -9 &#60;PID&#62;</p><br><br>
+                        <p>Finaliza o processo em espera:</p>
+                        <p class="border rounded p-2 bg-light text-danger d-inline">&#36; sudo kill -19 &#60;PID&#62;</p><br><br>
+                        <p>Finaliza o processo em execução:</p>
+                        <p class="border rounded p-2 bg-light text-danger d-inline">&#36; sudo kill -18 &#60;PID&#62;</p><br><br>
+                        <li>XKill</li>
+                        <p>É uma interface para finalizar processos.</p>
+                        <li>KillAll</li>
+                        <p>Finaliza todos os processos com o mesmo nome.</p>
+                        <p class="border rounded p-2 bg-light text-danger d-inline">&#36; sudo killall &#60;nome-processo&#62;</p><br><br>
+                    </ul>
+                    
+                </div>
+                <div class="col-12 py-4 border-bottom">
+                    
+                    <h3>Comandos PGREP e PIDOF </h3>
+                    <p>Os comandos pgrep e pidof determinam o número de identificação do processo (PID) por meio da busca do nome informado. É utilizado da seguinte forma:</p>
+                    <p class="border rounded p-2 bg-light text-danger d-inline">&#36; pgrep &#60;nome-processo&#62;</p><br><br>
+                    <p>ou ...</p>
+                    <p class="border rounded p-2 bg-light text-danger d-inline">&#36; pidof &#60;nome-processo&#62;</p><br><br>
+                    
+                </div>
+                <div class="col-12 py-4 border-bottom">
+                    
+                    <h3>Comando JOBS </h3>
+                    <p>Ele apresenta o estado dos processos executados pelo user/root em seu respectivo terminal (TTY).</p>
+                    <p class="border rounded p-2 bg-light text-danger d-inline">&#36; jobs</p><br><br>
+                    
+                </div>
+                <div class="col-12 py-4 border-bottom">
+                    
+                    <h3>Daemon </h3>
+                    <p>Um arquivo Daemon é um programa que sempre está sendo executado pelo sistema, é um processo que nunca morre, a não ser quando a máquina é desligada.</p>
+                    
+                </div>
+                <div class="col-12 py-4 border-bottom">
+                    
+                    <h3>Colunas do PS AUX</h3>
+                    <ul>
+                        <li>USER</li>
+                        <p>Nome do usuário dono do processo.</p>
+                        <li>UID</li>
+                        <p>Número de identificação do usuário dono do processo.</p>
+                        <li>PID</li>
+                        <p>Número de identificação do processo.</p>
+                        <li>PPID</li>
+                        <p>Número de identificação do processo pai.</p>
+                        <li>\% CPU</li>
+                        <p>Porcentagem do processamento usado.</p>
+                        <li>\% MEM</li>
+                        <p>Porcentagem da memória usada.</p>
+                        <li>VSZ</li>
+                        <p>Indica o tamanho virtual do processo.</p>
+                        <li>RSS</li>
+                        <p>Resident Set Size, indica a quantidade de memória usada (em Kbytes).</p>
+                        <li>TTY</li>
+                        <p>Indica o identificador do terminal do processo.</p>
+                        <li>START</li>
+                        <p>Hora em que o processo foi iniciado.</p>
+                        <li>COMMAND</li>
+                        <p>Nome do comando que executa aquele processo.</p>
+                        <li>PRI</li>
+                        <p>Valor da prioridade do processo.</p>
+                        <li>NI</li>
+                        <p>Valor preciso da prioridade (geralmente igual aos de PRI).</p>
+                        <li>WCHAN</li>
+                        <p>Mostra a função do kernel ondeo processo se encontra em modo suspenso.</p>
+                        <li>STAT</li>
+                        <p>Indica o estado atual do processo, sebdi representado por uma letra.</p>
+                    </ul>
+                    
+                </div>]
+                <div class="col-12 py-4 border-bottom">
+                    
+                    <h3>Comando TOP</h3>
+                    <p>O Comando top funciona como um gerenciador de tarefas/processos no sistema.</p>
+                    <p class="border rounded p-2 bg-light text-danger d-inline">&#36; top</p><br><br>
+                    
+                </div>
+                <div class="col-12 py-4 border-bottom">
+                    
+                    <h3>Comando LSOF</h3>
+                    <p>Esse comando é importante para o sistema devido sua capacidade de listar todos os arquivos abertos por todos os processos. Quando falamos em arquivos isso significa que podem ser bibliotecas, sockets, arquivos comuns, diretórios, etc.</p>
+                    <p>Assim, o comando fornece um mapeamento do que o programa está usando no sistema.</p>
+                    <p class="border rounded p-2 bg-light text-danger d-inline">&#36; lsof</p><br><br>
+                    
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <footer class="bg-dark stretch-bottom py-2 text-light">
+        <div class="container">
+            <p>Site desenvolvido por Henrique Bustillos</p>
+        </div>
+    </footer>
+
+    <!-- JavaScript Opcional -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+    
+</body>
+</html>

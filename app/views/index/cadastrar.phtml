@@ -1,0 +1,144 @@
+<body class="bg-danger">
+<div class="container">
+  <div class="d-flex justify-content-center my-5">
+    <div class="card" style="width: 36rem;">
+      <div class="card-body">
+
+        <div class="d-flex justify-content-center">
+          <a href="/">
+					  <img class="logo" src="img/favicon-cl.png" alt="Cursos Livres">
+				  </a>
+        </div>
+
+        <div class="row">
+          <div class="col">
+            <h2>Crie sua conta</h2>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col">
+            
+            <form action="/registrar" method="post">
+
+              <div class="row mb-3">
+
+                <div class="col-sm-4 col-md-4">
+                  <hr>
+                </div>
+                <div class="col-sm-4 col-md-4 text-center">
+                  <span class="subtitle text-muted">Obrigatório</span>
+                </div>
+                <div class="col-sm-4 col-md-4">
+                  <hr>
+                </div>
+
+              </div>
+
+              <div class="form-row">
+                <div class="col-6 form-group">
+                  <input name="nome" value="<?= $this->view->usuario['nome'] ?>" type="text" maxlength="40" class="form-control" placeholder="Nome" required>
+                </div>
+                <div class="col-6 form-group">
+                  <input name="sobrenome" value="<?= $this->view->usuario['sobrenome'] ?>" type="text" maxlength="40" class="form-control" placeholder="Sobrenome" required>
+                </div>
+              </div>
+              
+              <div class="form-group">
+                <input name="email" value="<?= $this->view->usuario['email'] ?>" type="email" maxlength="60" class="form-control" placeholder="E-mail" required>
+              </div>
+
+              <div class="form-group">
+                <input name="senha" value="<?= $this->view->usuario['senha'] ?>" type="password" maxlength="100" class="form-control" placeholder="Senha" required>
+              </div>
+
+              <div class="row my-3">
+
+                <div class="col-sm-4 col-md-4">
+                  <hr>
+                </div>
+                <div class="col-sm-4 col-md-4 text-center">
+                  <span class="subtitle text-muted">Opcionais</span>
+                </div>
+                <div class="col-sm-4 col-md-4">
+                  <hr>
+                </div>
+
+              </div>
+
+              <div class="form-row">
+
+                <div class="form-group col-md-6">
+                    <label for="cel">Celular</label>
+                    <input type="text" class="form-control" id="cel" name="cel"  value="<?= $this->view->usuario['cel'] ?>"  maxlength="15" placeholder="(00) 00000-0000">
+                </div>
+
+                <div class="form-group col-md-6">
+                    <label for="tel">Telefone</label>
+                    <input type="text" class="form-control" id="tel" name="tel"  value="<?= $this->view->usuario['tel'] ?>"  maxlength="14" placeholder="(00) 0000-0000">
+                </div>
+
+              </div>
+
+              <?php if($this->view->erroCadastro) { ?>
+
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                  <strong>Erro na validação do cadastro!</strong> 
+                  <br>
+                  Verifique se os campos foram preenchidos corretamente.
+                  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+
+              <?php } ?>
+              
+              <div class="mt-4 mb-4">
+                <small class="form-text">
+                  Ao cadastrar-se, você concorda com os Termos de Serviço e com as Políticas de Privacidade · Opções de Privacidade
+                </small>
+              </div>
+
+              <div class="form-row">
+                <div class="col-4">
+                  <a href="/" class="btn btn-light btn-block">Voltar</a>
+                </div>
+                <div class="col-8">
+                  <button type="submit" class="btn btn-danger btn-block">Inscrever-se</button>
+                </div>
+              </div>
+
+              
+            </form>
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<script>
+
+		$('#cel').maskbrphone({  
+			useDdd           : true,
+			useDddParenthesis: true,
+			dddSeparator     : ' ',
+			numberSeparator  : '-'
+		});
+
+        $('#tel').maskbrphone({  
+			useDdd           : true,
+			useDddParenthesis: true,
+			dddSeparator     : ' ',
+			numberSeparator  : '-'
+		});
+
+</script>
+
+
+
+    
+  
